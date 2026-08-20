@@ -34,9 +34,8 @@ $term = get_queried_object();
 				echo esc_html(sprintf(__('Alles · %d', 'lbds'), $count));
 				?>
 			</span>
-			<?php
-			// Sibling categories as chips (same parent level = all nav cats)
-			foreach (lbds_nav_categories() as $c) :
+			<?php foreach (lbds_nav_categories() as $c) : ?>
+				<?php
 				if ($term instanceof WP_Term && (int) $c->term_id === (int) $term->term_id) {
 					continue;
 				}
@@ -44,12 +43,7 @@ $term = get_queried_object();
 				<a class="chip" href="<?php echo esc_url(get_term_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
 			<?php endforeach; ?>
 		</div>
-		<div class="sort">
-			<?php esc_html_e('Sorteren op', 'lbds'); ?>
-			<select onchange="if(this.value) location.href=this.value;">
-				<option value=""><?php esc_html_e('Nieuwste eerst', 'lbds'); ?></option>
-			</select>
-		</div>
+		<?php lbds_the_sort_select(); ?>
 	</div>
 
 	<div class="cards-grid">
@@ -63,34 +57,7 @@ $term = get_queried_object();
 		<?php endif; ?>
 	</div>
 
-	<?php
-	global $wp_query;
-	$pagination = paginate_links(
-		array(
-			'total'     => (int) $wp_query->max_num_pages,
-			'current'   => max(1, get_query_var('paged')),
-			'type'      => 'array',
-			'prev_text' => __('Vorige', 'lbds'),
-			'next_text' => __('Volgende', 'lbds'),
-		)
-	);
-	?>
-	<?php if ($pagination) : ?>
-		<div class="pagination">
-			<?php foreach ($pagination as $link) : ?>
-				<?php
-				$class = 'page-btn';
-				if (str_contains($link, 'current')) {
-					$class .= ' active';
-				}
-				if (str_contains($link, 'prev') || str_contains($link, 'next')) {
-					$class = 'page-arrow';
-				}
-				echo '<span class="' . esc_attr($class) . '">' . $link . '</span>'; // phpcs:ignore
-				?>
-			<?php endforeach; ?>
-		</div>
-	<?php endif; ?>
+	<?php lbds_the_pagination(); ?>
 </div>
 <?php
 get_footer();

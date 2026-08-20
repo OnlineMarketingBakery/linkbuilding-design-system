@@ -1,6 +1,6 @@
 <?php
 /**
- * Blog index (Artikelen page).
+ * Blog index (Artikelen page) — listing with sort + pagination.
  *
  * @package LBDS
  */
@@ -14,7 +14,18 @@ get_header();
 		<h1><?php echo esc_html(get_the_title(get_option('page_for_posts')) ?: __('Artikelen', 'lbds')); ?></h1>
 		<p><?php esc_html_e('Alle artikelen op een rij.', 'lbds'); ?></p>
 	</div>
-	<div class="cards-grid" style="padding-bottom:48px;">
+
+	<div class="toolbar">
+		<div class="filters">
+			<span class="chip active"><?php esc_html_e('Alles', 'lbds'); ?></span>
+			<?php foreach (lbds_nav_categories() as $c) : ?>
+				<a class="chip" href="<?php echo esc_url(get_term_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
+			<?php endforeach; ?>
+		</div>
+		<?php lbds_the_sort_select(); ?>
+	</div>
+
+	<div class="cards-grid" style="padding-bottom:24px;">
 		<?php if (have_posts()) : ?>
 			<?php while (have_posts()) : ?>
 				<?php the_post(); ?>
@@ -22,7 +33,8 @@ get_header();
 			<?php endwhile; ?>
 		<?php endif; ?>
 	</div>
-	<?php the_posts_pagination(); ?>
+
+	<?php lbds_the_pagination(); ?>
 </div>
 <?php
 get_footer();
