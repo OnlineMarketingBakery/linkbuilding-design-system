@@ -81,3 +81,26 @@ Also editable under **Appearance → Customize → Linkbuilding Brand**.
 - PHP 8.1+ (pilot server: 8.5)
 - WP-CLI on the server
 - Plugins from `blueprint/plugins.txt` (Rank Math, Contact Form 7)
+
+## Pilot status (verbouwing)
+
+Staging: https://verbouwing.onlinemarketingbakery.nl
+
+Completed on `sites-prod-01`:
+- Theme `linkbuilding-design-system` active
+- Blueprint pages + menus provisioned
+- Content pack imported (~266 posts)
+- Rank Math + Contact Form 7 active
+- Locale `nl_NL`
+
+Admin user created as `ombadmin` (password file on server: `/home/ploi/.verbouwing-admin-pass`). Change this password after first login.
+
+Ploi deploy helper:
+
+```bash
+SITE_PATH=/home/ploi/verbouwing.onlinemarketingbakery.nl/public \
+REPO=/home/ploi/linkbuilding-design-system \
+  /home/ploi/linkbuilding-design-system/scripts/ploi-deploy-theme.sh
+```
+
+Or add that as the site deploy script after `git pull` of this repo into `/home/ploi/linkbuilding-design-system`.
