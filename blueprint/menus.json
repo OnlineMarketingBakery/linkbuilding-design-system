@@ -1,0 +1,13 @@
+{
+  "primary": [
+    { "title": "Home", "url": "/", "type": "custom" },
+    { "title": "Artikelen", "url": "/artikelen/", "type": "custom" },
+    { "title": "Contact", "slug": "contact", "type": "page" },
+    { "title": "Adverteren", "slug": "adverteren", "type": "page" }
+  ],
+  "footer": [
+    { "title": "Contact", "slug": "contact", "type": "page" },
+    { "title": "Privacy", "slug": "privacy", "type": "page" },
+    { "title": "Adverteren", "slug": "adverteren", "type": "page" }
+  ]
+}

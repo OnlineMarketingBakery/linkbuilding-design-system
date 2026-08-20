@@ -1,0 +1,13 @@
+{
+  "permalink_structure": "/%postname%/",
+  "show_on_front": "page",
+  "blogname": "Site naam",
+  "blogdescription": "Korte tagline",
+  "timezone_string": "Europe/Amsterdam",
+  "date_format": "j F Y",
+  "time_format": "H:i",
+  "start_of_week": "1",
+  "posts_per_page": "10",
+  "default_comment_status": "closed",
+  "default_ping_status": "closed"
+}
