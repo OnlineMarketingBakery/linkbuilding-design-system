@@ -560,3 +560,63 @@ img{max-width:100%;height:auto;display:block;}
 .site-header .custom-logo-link{display:flex;align-items:center;}
 .faq-item.is-open .faq-q svg{transform:rotate(180deg);}
 .prose .elementor, .prose .elementor-section, .prose .elementor-container, .prose .elementor-widget-container{display:contents;}
+
+/* Contact Form 7 — Masterblog field + button styles */
+.wpcf7{max-width:520px;margin:28px 0 48px;}
+.wpcf7 form{display:flex;flex-direction:column;gap:18px;}
+.wpcf7 label{
+  display:flex;flex-direction:column;gap:6px;
+  font-size:12.5px;font-weight:600;color:var(--ink-muted);
+  font-family:var(--font-body);
+}
+.wpcf7 .wpcf7-form-control-wrap{display:block;width:100%;}
+.wpcf7 input[type="text"],
+.wpcf7 input[type="email"],
+.wpcf7 input[type="tel"],
+.wpcf7 input[type="url"],
+.wpcf7 input[type="number"],
+.wpcf7 select,
+.wpcf7 textarea{
+  width:100%;
+  font-family:var(--font-body);
+  font-size:15px;
+  padding:11px 14px;
+  border:1px solid var(--border-strong);
+  border-radius:3px;
+  background:var(--surface);
+  color:var(--ink);
+  box-sizing:border-box;
+}
+.wpcf7 textarea{min-height:140px;resize:vertical;line-height:1.5;}
+.wpcf7 input::placeholder,
+.wpcf7 textarea::placeholder{color:var(--ink-faint);}
+.wpcf7 input:focus,
+.wpcf7 select:focus,
+.wpcf7 textarea:focus{
+  outline:2px solid color-mix(in srgb, var(--accent) 35%, white);
+  border-color:var(--accent);
+}
+.wpcf7 input[type="submit"],
+.wpcf7 .wpcf7-submit{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--font-body);font-weight:600;font-size:14.5px;
+  padding:12px 22px;border-radius:3px;border:1px solid transparent;
+  background:var(--accent);color:#FFF8F2;cursor:pointer;
+  width:fit-content;margin-top:4px;
+  -webkit-appearance:none;appearance:none;
+}
+.wpcf7 input[type="submit"]:hover,
+.wpcf7 .wpcf7-submit:hover{filter:brightness(0.95);}
+.wpcf7 .wpcf7-not-valid-tip{font-size:12.5px;color:var(--accent);margin-top:4px;}
+.wpcf7 .wpcf7-response-output{
+  margin:16px 0 0;padding:14px 16px;border-radius:3px;
+  border:1px solid var(--border-strong);font-size:14px;line-height:1.5;
+}
+.wpcf7 form.sent .wpcf7-response-output{
+  border-color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 10%, white);
+}
+.wpcf7-spinner{margin-left:10px;}
+/* CF7 wraps controls oddly — keep labels clean */
+.wpcf7 p{margin:0;}
+.prose .wpcf7{font-size:15px;}
