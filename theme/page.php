@@ -1,6 +1,6 @@
 <?php
 /**
- * Page.
+ * Page — Masterblog utility/about-style content.
  *
  * @package LBDS
  */
@@ -9,18 +9,19 @@ get_header();
 ?>
 <?php while (have_posts()) : ?>
 	<?php the_post(); ?>
-	<article <?php post_class(); ?>>
-		<header class="lbds-page-hero">
-			<div class="lbds-wrap">
-				<h1><?php the_title(); ?></h1>
-			</div>
-		</header>
-		<div class="lbds-wrap">
-			<div class="lbds-prose">
-				<?php the_content(); ?>
-			</div>
+	<div class="page">
+		<div class="crumbs" style="padding-top:20px;">
+			<a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'lbds'); ?></a>
+			<span class="sep">/</span>
+			<span class="current"><?php the_title(); ?></span>
 		</div>
-	</article>
+		<div class="cat-head">
+			<h1><?php the_title(); ?></h1>
+		</div>
+		<article class="prose" style="max-width:680px;padding:24px 0 64px;font-size:18px;line-height:1.72;">
+			<?php the_content(); ?>
+		</article>
+	</div>
 <?php endwhile; ?>
 <?php
 get_footer();

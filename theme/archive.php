@@ -1,30 +1,26 @@
 <?php
 /**
- * Archives.
+ * Generic archive fallback → category-like layout.
  *
  * @package LBDS
  */
 
 get_header();
 ?>
-<header class="lbds-page-hero">
-	<div class="lbds-wrap">
+<div class="page">
+	<div class="cat-head">
+		<span class="kicker"><?php esc_html_e('Archief', 'lbds'); ?></span>
 		<h1><?php the_archive_title(); ?></h1>
-		<?php the_archive_description('<div class="lbds-hero__lead">', '</div>'); ?>
+		<?php the_archive_description('<p>', '</p>'); ?>
 	</div>
-</header>
-<section class="lbds-section">
-	<div class="lbds-wrap">
-		<div class="lbds-grid">
-			<?php if (have_posts()) : ?>
-				<?php while (have_posts()) : ?>
-					<?php the_post(); ?>
-					<?php get_template_part('template-parts/content', 'card'); ?>
-				<?php endwhile; ?>
-			<?php endif; ?>
-		</div>
-		<?php the_posts_pagination(); ?>
+	<div class="cards-grid" style="padding-bottom:48px;">
+		<?php if (have_posts()) : ?>
+			<?php while (have_posts()) : ?>
+				<?php the_post(); ?>
+				<?php get_template_part('template-parts/content', 'card'); ?>
+			<?php endwhile; ?>
+		<?php endif; ?>
 	</div>
-</section>
+</div>
 <?php
 get_footer();

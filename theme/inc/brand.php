@@ -1,6 +1,6 @@
 <?php
 /**
- * Brand tokens (Customizer + optional brand.json in uploads or theme).
+ * Brand / --accent (Masterblog theming hook).
  *
  * @package LBDS
  */
@@ -12,45 +12,32 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Default brand values.
- *
- * @return array<string, string>
+ * @return array{accent:string,tagline_override:string}
  */
 function lbds_default_brand(): array {
 	return array(
-		'color_primary'   => '#1B5E4B',
-		'color_accent'    => '#C45C26',
-		'color_ink'       => '#1A1F1C',
-		'color_paper'     => '#F3F0E8',
-		'color_muted'     => '#5C675F',
-		'font_display'    => 'Fraunces',
-		'font_body'       => 'Figtree',
-		'tagline_override'=> '',
+		'accent'            => '#B5502E',
+		'tagline_override'  => '',
 	);
 }
 
 /**
- * Merge theme_mods + optional brand.json.
- *
- * @return array<string, string>
+ * @return array{accent:string,tagline_override:string}
  */
 function lbds_get_brand(): array {
 	$defaults = lbds_default_brand();
 	$brand    = $defaults;
 
-	foreach (array_keys($defaults) as $key) {
-		$mod = get_theme_mod('lbds_' . $key, null);
-		if ($mod !== null && $mod !== '') {
-			$brand[$key] = (string) $mod;
-		}
+	$mod = get_theme_mod('lbds_accent', null);
+	if (is_string($mod) && $mod !== '') {
+		$brand['accent'] = $mod;
 	}
 
-	$json_paths = array(
+	$paths = array(
 		WP_CONTENT_DIR . '/uploads/brand.json',
 		LBDS_DIR . '/brand.json',
 	);
-
-	foreach ($json_paths as $path) {
+	foreach ($paths as $path) {
 		if (!is_readable($path)) {
 			continue;
 		}
@@ -58,21 +45,14 @@ function lbds_get_brand(): array {
 		if (!is_array($data)) {
 			continue;
 		}
-		$map = array(
-			'color_primary'    => 'color_primary',
-			'color_accent'     => 'color_accent',
-			'color_ink'        => 'color_ink',
-			'color_paper'      => 'color_paper',
-			'color_muted'      => 'color_muted',
-			'font_display'     => 'font_display',
-			'font_body'        => 'font_body',
-			'tagline'          => 'tagline_override',
-			'tagline_override' => 'tagline_override',
-		);
-		foreach ($map as $json_key => $brand_key) {
-			if (!empty($data[$json_key]) && is_string($data[$json_key])) {
-				$brand[$brand_key] = $data[$json_key];
-			}
+		if (!empty($data['accent']) && is_string($data['accent'])) {
+			$brand['accent'] = $data['accent'];
+		}
+		if (!empty($data['color_accent']) && is_string($data['color_accent'])) {
+			$brand['accent'] = $data['color_accent'];
+		}
+		if (!empty($data['tagline']) && is_string($data['tagline'])) {
+			$brand['tagline_override'] = $data['tagline'];
 		}
 		break;
 	}
@@ -81,64 +61,43 @@ function lbds_get_brand(): array {
 }
 
 /**
- * Inline CSS variables for the document.
+ * Inline CSS variables for Masterblog tokens + accent.
  */
 function lbds_brand_css_variables(): string {
 	$b = lbds_get_brand();
 	return sprintf(
-		':root{--lbds-primary:%1$s;--lbds-accent:%2$s;--lbds-ink:%3$s;--lbds-paper:%4$s;--lbds-muted:%5$s;--lbds-font-display:"%6$s",Georgia,serif;--lbds-font-body:"%7$s",system-ui,sans-serif;}',
-		esc_attr($b['color_primary']),
-		esc_attr($b['color_accent']),
-		esc_attr($b['color_ink']),
-		esc_attr($b['color_paper']),
-		esc_attr($b['color_muted']),
-		esc_attr($b['font_display']),
-		esc_attr($b['font_body'])
+		':root{--paper:#FAF7F2;--surface:#FFFFFF;--ink:#211D18;--ink-muted:#6B655C;--ink-faint:#948C7F;--border:#E3DDD3;--border-strong:#CFC6B8;--font-display:"Newsreader",Georgia,serif;--font-body:"Public Sans",-apple-system,"Segoe UI",sans-serif;--accent:%1$s;}',
+		esc_attr($b['accent'])
 	);
 }
 
 /**
- * Register Customizer brand controls.
- *
  * @param WP_Customize_Manager $wp_customize Customizer.
  */
 function lbds_customize_register(WP_Customize_Manager $wp_customize): void {
 	$wp_customize->add_section(
 		'lbds_brand',
 		array(
-			'title'    => __('Linkbuilding Brand', 'lbds'),
+			'title'    => __('Masterblog Brand', 'lbds'),
 			'priority' => 30,
 		)
 	);
-
-	$fields = array(
-		'color_primary' => __('Primary color', 'lbds'),
-		'color_accent'  => __('Accent color', 'lbds'),
-		'color_ink'     => __('Ink / text color', 'lbds'),
-		'color_paper'   => __('Paper / background', 'lbds'),
-		'color_muted'   => __('Muted text', 'lbds'),
+	$wp_customize->add_setting(
+		'lbds_accent',
+		array(
+			'default'           => '#B5502E',
+			'sanitize_callback' => 'sanitize_hex_color',
+		)
 	);
-
-	$defaults = lbds_default_brand();
-	foreach ($fields as $key => $label) {
-		$wp_customize->add_setting(
-			'lbds_' . $key,
+	$wp_customize->add_control(
+		new WP_Customize_Color_Control(
+			$wp_customize,
+			'lbds_accent',
 			array(
-				'default'           => $defaults[$key],
-				'sanitize_callback' => 'sanitize_hex_color',
-				'transport'         => 'refresh',
+				'label'   => __('Accent (--accent)', 'lbds'),
+				'section' => 'lbds_brand',
 			)
-		);
-		$wp_customize->add_control(
-			new WP_Customize_Color_Control(
-				$wp_customize,
-				'lbds_' . $key,
-				array(
-					'label'   => $label,
-					'section' => 'lbds_brand',
-				)
-			)
-		);
-	}
+		)
+	);
 }
 add_action('customize_register', 'lbds_customize_register');

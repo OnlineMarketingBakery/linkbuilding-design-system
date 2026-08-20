@@ -1,6 +1,6 @@
 <?php
 /**
- * Linkbuilding Design System theme.
+ * Linkbuilding Design System — Masterblog.
  *
  * @package LBDS
  */
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-define('LBDS_VERSION', '1.0.0');
+define('LBDS_VERSION', '2.0.0');
 define('LBDS_DIR', get_template_directory());
 define('LBDS_URI', get_template_directory_uri());
 

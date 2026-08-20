@@ -1,33 +1,28 @@
 <?php
 /**
- * Blog index / fallback.
+ * Blog index (Artikelen page).
  *
  * @package LBDS
  */
 
 get_header();
 ?>
-<header class="lbds-page-hero">
-	<div class="lbds-wrap">
+<div class="page">
+	<?php get_template_part('template-parts/cat-strip'); ?>
+	<div class="cat-head">
+		<span class="kicker"><?php esc_html_e('Archief', 'lbds'); ?></span>
 		<h1><?php echo esc_html(get_the_title(get_option('page_for_posts')) ?: __('Artikelen', 'lbds')); ?></h1>
+		<p><?php esc_html_e('Alle artikelen op een rij.', 'lbds'); ?></p>
 	</div>
-</header>
-<section class="lbds-section">
-	<div class="lbds-wrap">
-		<div class="lbds-grid">
-			<?php if (have_posts()) : ?>
-				<?php while (have_posts()) : ?>
-					<?php the_post(); ?>
-					<?php get_template_part('template-parts/content', 'card'); ?>
-				<?php endwhile; ?>
-			<?php else : ?>
-				<p><?php esc_html_e('Geen berichten gevonden.', 'lbds'); ?></p>
-			<?php endif; ?>
-		</div>
-		<div style="margin-top:2rem">
-			<?php the_posts_pagination(); ?>
-		</div>
+	<div class="cards-grid" style="padding-bottom:48px;">
+		<?php if (have_posts()) : ?>
+			<?php while (have_posts()) : ?>
+				<?php the_post(); ?>
+				<?php get_template_part('template-parts/content', 'card'); ?>
+			<?php endwhile; ?>
+		<?php endif; ?>
 	</div>
-</section>
+	<?php the_posts_pagination(); ?>
+</div>
 <?php
 get_footer();

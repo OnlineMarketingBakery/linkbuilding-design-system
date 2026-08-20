@@ -1,10 +1,5 @@
 {
-  "color_primary": "#1B5E4B",
-  "color_accent": "#C45C26",
-  "color_ink": "#1A1F1C",
-  "color_paper": "#F3F0E8",
-  "color_muted": "#5C675F",
-  "font_display": "Fraunces",
-  "font_body": "Figtree",
-  "tagline": "Alles over verbouwen, klussen en wonen"
+  "blogname": "Verbouwing aan huis",
+  "tagline": "Alles over verbouwen, klussen en wonen",
+  "accent": "#B5502E"
 }

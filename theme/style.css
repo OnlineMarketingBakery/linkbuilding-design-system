@@ -2,16 +2,12 @@
 Theme Name: Linkbuilding Design System
 Theme URI: https://github.com/OnlineMarketingBakery/linkbuilding-design-system
 Author: Online Marketing Bakery
-Author URI: https://onlinemarketingbakery.nl
-Description: Shared custom theme for OMB linkbuilding sites. Brand via Customizer / brand.json — one codebase, many sites.
-Version: 1.0.0
+Description: Masterblog editorial design system — Newsreader + Public Sans, --accent theming. Same-to-same from masterblog-design-reference.
+Version: 2.0.0
 Requires at least: 6.4
 Tested up to: 6.8
 Requires PHP: 8.1
 License: GNU General Public License v2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: lbds
-Tags: blog, custom-colors, custom-logo, custom-menu, featured-images, translation-ready
+Tags: blog, custom-logo, custom-menu, featured-images, translation-ready
 */
-
-/* Base tokens loaded from assets/css/main.css */
