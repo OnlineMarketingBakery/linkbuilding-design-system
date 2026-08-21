@@ -7,13 +7,13 @@
 
 get_header();
 ?>
-<div class="page">
+<div class="mb-page">
 	<div class="cat-head">
 		<span class="kicker"><?php esc_html_e('Archief', 'lbds'); ?></span>
 		<h1><?php the_archive_title(); ?></h1>
 		<?php the_archive_description('<p>', '</p>'); ?>
 	</div>
-	<div class="cards-grid" style="padding-bottom:48px;">
+	<div class="cards-grid reveal" style="padding-bottom:48px;">
 		<?php if (have_posts()) : ?>
 			<?php while (have_posts()) : ?>
 				<?php the_post(); ?>

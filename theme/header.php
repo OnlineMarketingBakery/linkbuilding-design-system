@@ -16,9 +16,10 @@
 <a class="lbds-skip" href="#content"><?php esc_html_e('Skip to content', 'lbds'); ?></a>
 <div class="mb-root" style="--accent: <?php echo esc_attr(lbds_get_brand()['accent']); ?>">
 
+<div class="site-chrome">
 <?php get_template_part('template-parts/topbar'); ?>
 
-<header class="site-header page">
+<header class="site-header mb-page">
 	<a class="logo" href="<?php echo esc_url(home_url('/')); ?>">
 		<?php if (has_custom_logo()) : ?>
 			<?php the_custom_logo(); ?>
@@ -50,5 +51,6 @@
 		<a class="btn-cta" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact', 'lbds'); ?></a>
 	</div>
 </header>
+</div><!-- .site-chrome -->
 
 <main id="content">

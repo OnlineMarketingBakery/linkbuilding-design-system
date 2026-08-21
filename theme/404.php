@@ -7,7 +7,7 @@
 
 get_header();
 ?>
-<div class="page">
+<div class="mb-page">
 	<div class="empty">
 		<div class="code">404</div>
 		<h2><?php esc_html_e('Deze pagina bestaat niet (meer)', 'lbds'); ?></h2>

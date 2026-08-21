@@ -19,3 +19,16 @@ function lbds_enqueue_assets(): void {
 	wp_enqueue_script('lbds-main', LBDS_URI . '/assets/js/main.js', array(), LBDS_VERSION, array('strategy' => 'defer', 'in_footer' => true));
 }
 add_action('wp_enqueue_scripts', 'lbds_enqueue_assets');
+
+/**
+ * Favicon (SVG) — override via Customizer Site Icon when set.
+ */
+function lbds_favicon_links(): void {
+	if (function_exists('has_site_icon') && has_site_icon()) {
+		return;
+	}
+	$href = LBDS_URI . '/assets/favicon.svg';
+	echo '<link rel="icon" href="' . esc_url($href) . '" type="image/svg+xml">' . "\n";
+	echo '<link rel="apple-touch-icon" href="' . esc_url($href) . '">' . "\n";
+}
+add_action('wp_head', 'lbds_favicon_links', 2);

@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
-define('LBDS_VERSION', '2.0.2');
+define('LBDS_VERSION', '2.0.8');
 define('LBDS_DIR', get_template_directory());
 define('LBDS_URI', get_template_directory_uri());
 

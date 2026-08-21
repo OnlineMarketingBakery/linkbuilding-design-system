@@ -17,7 +17,7 @@ get_header();
 	$toc     = lbds_toc_items((string) get_post_field('post_content', get_the_ID()));
 	?>
 
-	<div class="page">
+	<div class="mb-page">
 		<div class="crumbs">
 			<a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'lbds'); ?></a>
 			<?php if ($cat) : ?>
@@ -55,7 +55,7 @@ get_header();
 		<div class="hero-img"><?php echo lbds_placeholder_svg(); // phpcs:ignore ?></div>
 	<?php endif; ?>
 
-	<div class="page">
+	<div class="mb-page">
 		<div class="article-body-wrap">
 			<aside class="toc">
 				<?php if ($toc) : ?>
@@ -95,7 +95,7 @@ get_header();
 		</div>
 	</div>
 
-	<div class="page" style="padding:0 56px 8px;">
+	<div class="mb-page" style="padding:0 56px 8px;">
 		<div class="prevnext">
 			<?php
 			$prev = get_adjacent_post(false, '', true);

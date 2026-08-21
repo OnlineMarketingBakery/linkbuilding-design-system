@@ -9,7 +9,7 @@ get_header();
 
 $term = get_queried_object();
 ?>
-<div class="page">
+<div class="mb-page">
 	<div class="crumbs">
 		<a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'lbds'); ?></a>
 		<span class="sep">/</span>
@@ -46,7 +46,7 @@ $term = get_queried_object();
 		<?php lbds_the_sort_select(); ?>
 	</div>
 
-	<div class="cards-grid">
+	<div class="cards-grid reveal">
 		<?php if (have_posts()) : ?>
 			<?php while (have_posts()) : ?>
 				<?php the_post(); ?>

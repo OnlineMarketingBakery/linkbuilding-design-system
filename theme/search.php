@@ -8,7 +8,7 @@
 get_header();
 $q = get_search_query();
 ?>
-<div class="page">
+<div class="mb-page">
 	<section class="section">
 		<span class="kicker"><?php esc_html_e('Zoekresultaten', 'lbds'); ?></span>
 		<div class="search-head">

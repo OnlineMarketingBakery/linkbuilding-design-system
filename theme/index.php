@@ -7,7 +7,7 @@
 
 get_header();
 ?>
-<div class="page">
+<div class="mb-page">
 	<?php get_template_part('template-parts/cat-strip'); ?>
 	<div class="cat-head">
 		<span class="kicker"><?php esc_html_e('Archief', 'lbds'); ?></span>
@@ -25,7 +25,7 @@ get_header();
 		<?php lbds_the_sort_select(); ?>
 	</div>
 
-	<div class="cards-grid" style="padding-bottom:24px;">
+	<div class="cards-grid reveal" style="padding-bottom:24px;">
 		<?php if (have_posts()) : ?>
 			<?php while (have_posts()) : ?>
 				<?php the_post(); ?>

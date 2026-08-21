@@ -1,6 +1,6 @@
 <?php
 /**
- * Front page — Masterblog Home.html
+ * Front page — Masterblog with cinematic contrast hero.
  *
  * @package LBDS
  */
@@ -16,51 +16,51 @@ $featured = new WP_Query(
 );
 $featured_id = 0;
 ?>
-<div class="page">
+<div class="mb-page">
 	<?php get_template_part('template-parts/cat-strip'); ?>
+</div>
 
-	<?php if ($featured->have_posts()) : ?>
-		<?php while ($featured->have_posts()) : ?>
-			<?php
-			$featured->the_post();
-			$featured_id = get_the_ID();
-			$cat         = lbds_primary_category();
-			?>
-			<section class="hero">
-				<a class="ph" href="<?php the_permalink(); ?>">
-					<?php if (has_post_thumbnail()) : ?>
-						<?php the_post_thumbnail('lbds-hero'); ?>
-					<?php else : ?>
-						<?php echo lbds_placeholder_svg(); // phpcs:ignore ?>
-					<?php endif; ?>
-				</a>
-				<div>
-					<?php if ($cat) : ?>
-						<span class="tag-accent"><?php esc_html_e('Uitgelicht', 'lbds'); ?> &middot; <?php echo esc_html($cat->name); ?></span>
-					<?php endif; ?>
-					<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
-					<p class="dek"><?php echo esc_html(wp_strip_all_tags(get_the_excerpt())); ?></p>
-					<div class="meta">
-						<span><?php the_author(); ?></span>
-						<span class="dot"></span>
-						<span><?php echo esc_html((string) lbds_reading_time()); ?> <?php esc_html_e('min leestijd', 'lbds'); ?></span>
-						<span class="dot"></span>
-						<span><?php echo esc_html(get_the_date()); ?></span>
-					</div>
+<?php if ($featured->have_posts()) : ?>
+	<?php while ($featured->have_posts()) : ?>
+		<?php
+		$featured->the_post();
+		$featured_id = get_the_ID();
+		$cat         = lbds_primary_category();
+		$bg          = get_the_post_thumbnail_url(get_the_ID(), 'lbds-hero');
+		$style       = $bg ? ' style="--hero-bg:url(\'' . esc_url($bg) . '\')"' : '';
+		?>
+		<section class="hero-cinema reveal"<?php echo $style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<div class="hero-cinema__media" aria-hidden="true"></div>
+			<div class="hero-cinema__shade" aria-hidden="true"></div>
+			<div class="mb-page hero-cinema__inner">
+				<?php if ($cat) : ?>
+					<span class="tag-accent tag-accent--on-dark"><?php esc_html_e('Uitgelicht', 'lbds'); ?> &middot; <?php echo esc_html($cat->name); ?></span>
+				<?php endif; ?>
+				<h1><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h1>
+				<p class="dek"><?php echo esc_html(wp_strip_all_tags(get_the_excerpt())); ?></p>
+				<div class="meta">
+					<span><?php the_author(); ?></span>
+					<span class="dot"></span>
+					<span><?php echo esc_html((string) lbds_reading_time()); ?> <?php esc_html_e('min leestijd', 'lbds'); ?></span>
+					<span class="dot"></span>
+					<span><?php echo esc_html(get_the_date()); ?></span>
 				</div>
-			</section>
-		<?php endwhile; ?>
-		<?php wp_reset_postdata(); ?>
-	<?php endif; ?>
+				<a class="hero-cinema__cta" href="<?php the_permalink(); ?>"><?php esc_html_e('Lees artikel', 'lbds'); ?> &rarr;</a>
+			</div>
+		</section>
+	<?php endwhile; ?>
+	<?php wp_reset_postdata(); ?>
+<?php endif; ?>
 
-	<section class="section">
+<section class="section section-band section-band--surface">
+	<div class="mb-page">
 		<div class="section-head">
 			<h2 class="section-title"><?php esc_html_e('Nieuwste artikelen', 'lbds'); ?></h2>
 			<a class="section-link" href="<?php echo esc_url(get_permalink((int) get_option('page_for_posts')) ?: home_url('/artikelen/')); ?>">
 				<?php esc_html_e('Alle artikelen', 'lbds'); ?> &rarr;
 			</a>
 		</div>
-		<div class="cards-grid">
+		<div class="cards-grid reveal">
 			<?php
 			$latest = new WP_Query(
 				array(
@@ -78,9 +78,11 @@ $featured_id = 0;
 			endif;
 			?>
 		</div>
-	</section>
+	</div>
+</section>
 
-	<section class="section">
+<section class="section section-band section-band--warm">
+	<div class="mb-page">
 		<div class="split">
 			<div>
 				<?php
@@ -117,7 +119,7 @@ $featured_id = 0;
 				<?php endif; ?>
 			</div>
 			<aside>
-				<div class="sidebar-block">
+				<div class="sidebar-block sidebar-panel">
 					<div class="sidebar-title"><?php esc_html_e('Meest gelezen', 'lbds'); ?></div>
 					<?php
 					$popular = new WP_Query(
@@ -147,7 +149,7 @@ $featured_id = 0;
 				<?php get_template_part('template-parts/newsletter', null, array('variant' => 'sidebar')); ?>
 			</aside>
 		</div>
-	</section>
-</div>
+	</div>
+</section>
 <?php
 get_footer();

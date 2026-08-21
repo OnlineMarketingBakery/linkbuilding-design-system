@@ -8,7 +8,7 @@
 get_header();
 $author = get_queried_object();
 ?>
-<div class="page">
+<div class="mb-page">
 	<div class="profile">
 		<div class="avatar-lg"><?php echo esc_html(mb_substr(get_the_author_meta('display_name', $author->ID ?? 0), 0, 1)); ?></div>
 		<div>
@@ -31,7 +31,7 @@ $author = get_queried_object();
 		<div class="section-head">
 			<h2 class="section-title"><?php echo esc_html(sprintf(__('Artikelen van %s', 'lbds'), get_the_author())); ?></h2>
 		</div>
-		<div class="cards-grid">
+		<div class="cards-grid reveal">
 			<?php if (have_posts()) : ?>
 				<?php while (have_posts()) : ?>
 					<?php the_post(); ?>

@@ -65,21 +65,64 @@ cp "$BLUEPRINT/pages.xml" "$TMP_IMPORT"
 "${WP[@]}" plugin is-installed wordpress-importer >/dev/null 2>&1 || "${WP[@]}" plugin install wordpress-importer --activate
 "${WP[@]}" plugin activate wordpress-importer >/dev/null 2>&1 || true
 
-for slug in home artikelen contact privacy adverteren; do
+MISSING=0
+for slug in home artikelen contact privacy adverteren partners; do
   if "${WP[@]}" post list --post_type=page --name="$slug" --format=count | grep -vq '^0$'; then
     echo "page /$slug/ exists — skip recreate"
   else
-    echo "will import missing pages via WXR (idempotent-ish)"
+    echo "page /$slug/ missing"
+    MISSING=1
   fi
 done
 
-# Always try import; WordPress importer may duplicate — prefer create if missing
-if ! "${WP[@]}" post list --post_type=page --name=home --field=ID 2>/dev/null | grep -q '[0-9]'; then
-  "${WP[@]}" import "$TMP_IMPORT" --authors=create
+# Import blueprint WXR when any structural page is missing (may create only new ones via selective create below)
+if [[ "$MISSING" -eq 1 ]]; then
+  if ! "${WP[@]}" post list --post_type=page --name=home --field=ID 2>/dev/null | grep -q '[0-9]'; then
+    "${WP[@]}" import "$TMP_IMPORT" --authors=create
+  else
+    # Create any missing pages individually from blueprint stubs via wp post create
+    python3 - <<PY
+import re, subprocess
+from pathlib import Path
+xml = Path("$BLUEPRINT/pages.xml").read_text()
+wp = ["wp", "--path=$WP_PATH", "--allow-root"]
+for m in re.finditer(r"<item>(.*?)</item>", xml, re.S):
+    it = m.group(1)
+    if "page]]></wp:post_type>" not in it and ">page</wp:post_type>" not in it:
+        continue
+    def cd(tag):
+        mm = re.search(rf"<{tag}><!\[CDATA\[(.*?)\]\]></{tag}>", it, re.S)
+        return mm.group(1) if mm else ""
+    slug = cd("wp:post_name")
+    title = cd("title")
+    body = cd("content:encoded")
+    if not slug:
+        continue
+    exists = subprocess.check_output(wp + ["post", "list", "--post_type=page", f"--name={slug}", "--format=count"], text=True).strip()
+    if exists != "0":
+        continue
+    subprocess.check_call(
+        wp
+        + [
+            "post",
+            "create",
+            "--post_type=page",
+            f"--post_title={title}",
+            f"--post_name={slug}",
+            "--post_status=publish",
+            f"--post_content={body}",
+        ]
+    )
+    print(f"created /{slug}/")
+PY
+  fi
 else
-  echo "Blueprint pages appear present; skipping WXR import"
+  echo "All blueprint pages present; skipping WXR import"
 fi
 rm -f "$TMP_IMPORT"
+
+echo "==> Contact Form 7 default form"
+"${WP[@]}" eval-file "$REPO_ROOT/scripts/provision-cf7-wp.php" || true
 
 echo "==> Front page / posts page"
 HOME_ID=$("${WP[@]}" post list --post_type=page --name=home --field=ID | head -1)

@@ -69,6 +69,10 @@ echo "==> Import WXR: $CONTENT_XML"
 echo "==> Sanitize Elementor / builder markup in post_content"
 "${WP[@]}" eval-file "$REPO_ROOT/scripts/sanitize-content-wp.php"
 
+echo "==> Ensure CF7 Contact form + normalize pack utility pages"
+"${WP[@]}" eval-file "$REPO_ROOT/scripts/provision-cf7-wp.php" || true
+"${WP[@]}" eval-file "$REPO_ROOT/scripts/apply-pack-pages-wp.php" || true
+
 if [[ -n "$OLD_DOMAIN" ]]; then
   NEW_HOME=$("${WP[@]}" option get home)
   echo "==> Search-replace $OLD_DOMAIN -> $NEW_HOME (content URLs)"
@@ -81,6 +85,9 @@ echo "==> Optional media sideload from media-manifest.json (featured-ish URLs)"
 if [[ -f "$PACK/media-manifest.json" ]]; then
   "${WP[@]}" eval-file "$REPO_ROOT/scripts/sideload-media-wp.php" || true
 fi
+
+echo "==> Rebuild menus (includes Partners in footer)"
+LBDS_REPO="$REPO_ROOT" "${WP[@]}" eval-file "$REPO_ROOT/scripts/build-menus-wp.php" || true
 
 "${WP[@]}" rewrite flush --hard
 "${WP[@]}" cache flush 2>/dev/null || true
