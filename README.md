@@ -4,6 +4,8 @@ Shared **custom WordPress theme** + **site blueprint** + **provision scripts** f
 
 Repo: https://github.com/OnlineMarketingBakery/linkbuilding-design-system
 
+**Full project handoff (servers, paths, factory, what’s next):** see [`CONTEXT.md`](CONTEXT.md).
+
 ## Architecture
 
 | Layer | Purpose |
