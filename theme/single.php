@@ -1,12 +1,13 @@
 <?php
 /**
- * Single article — Masterblog Article.html
+ * Single article — Masterblog Article.html (no newsletter).
  *
  * @package LBDS
  */
 
 get_header();
 ?>
+<div class="progress-track" aria-hidden="true"><div class="progress-bar" data-progress></div></div>
 <?php while (have_posts()) : ?>
 	<?php
 	the_post();
@@ -27,9 +28,9 @@ get_header();
 			<span class="sep">/</span>
 			<span class="current"><?php echo esc_html(wp_trim_words(get_the_title(), 8)); ?></span>
 		</div>
-		<div class="article-head">
+		<div class="article-head reveal">
 			<?php if ($cat) : ?>
-				<span class="tag-accent"><?php echo esc_html($cat->name); ?></span>
+				<span class="badge-cat"><?php echo esc_html($cat->name); ?></span>
 			<?php endif; ?>
 			<h1><?php the_title(); ?></h1>
 			<?php if (has_excerpt()) : ?>
@@ -50,9 +51,9 @@ get_header();
 	</div>
 
 	<?php if (has_post_thumbnail()) : ?>
-		<div class="hero-img"><?php the_post_thumbnail('lbds-hero'); ?></div>
+		<div class="hero-img reveal"><?php the_post_thumbnail('lbds-hero'); ?></div>
 	<?php else : ?>
-		<div class="hero-img"><?php echo lbds_placeholder_svg(); // phpcs:ignore ?></div>
+		<div class="hero-img reveal"><?php echo lbds_placeholder_svg(); // phpcs:ignore ?></div>
 	<?php endif; ?>
 
 	<div class="mb-page">
@@ -95,7 +96,7 @@ get_header();
 		</div>
 	</div>
 
-	<div class="mb-page" style="padding:0 56px 8px;">
+	<div class="mb-page">
 		<div class="prevnext">
 			<?php
 			$prev = get_adjacent_post(false, '', true);
@@ -121,7 +122,7 @@ get_header();
 	</div>
 
 	<?php if ($cat) : ?>
-		<div class="related-section page">
+		<div class="related-section">
 			<h2 class="section-title"><?php echo esc_html(sprintf(__('Meer over %s', 'lbds'), $cat->name)); ?></h2>
 			<div class="related-grid">
 				<?php
@@ -144,8 +145,6 @@ get_header();
 			</div>
 		</div>
 	<?php endif; ?>
-
-	<?php get_template_part('template-parts/newsletter', null, array('variant' => 'wide')); ?>
 
 <?php endwhile; ?>
 <?php

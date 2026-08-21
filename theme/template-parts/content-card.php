@@ -4,18 +4,19 @@
  *
  * @package LBDS
  */
-$cat = lbds_primary_category();
+$cat  = lbds_primary_category();
+$slug = $cat ? $cat->slug : '';
 ?>
-<article <?php post_class('card'); ?>>
+<article <?php post_class('card'); ?> <?php echo $slug ? 'data-cat="' . esc_attr($slug) . '"' : ''; ?>>
 	<a class="ph" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
 		<?php if (has_post_thumbnail()) : ?>
 			<?php the_post_thumbnail('lbds-card'); ?>
 		<?php else : ?>
-			<?php echo lbds_placeholder_svg(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<span class="ph-in"><?php echo lbds_placeholder_svg(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		<?php endif; ?>
 	</a>
 	<?php if ($cat) : ?>
-		<a class="tag-accent" href="<?php echo esc_url(get_term_link($cat)); ?>"><?php echo esc_html($cat->name); ?></a>
+		<a class="badge-cat" href="<?php echo esc_url(get_term_link($cat)); ?>"><?php echo esc_html($cat->name); ?></a>
 	<?php endif; ?>
 	<h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 	<p class="excerpt"><?php echo esc_html(wp_strip_all_tags(get_the_excerpt())); ?></p>

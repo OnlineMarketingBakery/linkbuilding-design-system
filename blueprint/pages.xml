@@ -70,8 +70,8 @@
 		<dc:creator><![CDATA[admin]]></dc:creator>
 		<guid isPermaLink="false">lbds-blueprint-contact</guid>
 		<description></description>
-		<content:encoded><![CDATA[<p>Neem contact met ons op via het formulier of e-mail.</p>
-<p>[contact-form-7 title="Contact"]</p>]]></content:encoded>
+		<content:encoded><![CDATA[<p>Neem contact met ons op via e-mail. We reageren zo snel mogelijk op je bericht.</p>
+<p>Vermeld kort je vraag of het onderwerp, dan kunnen we je gericht helpen.</p>]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>103</wp:post_id>
 		<wp:post_date>2026-08-20 12:00:00</wp:post_date>
@@ -125,8 +125,7 @@
 		<dc:creator><![CDATA[admin]]></dc:creator>
 		<guid isPermaLink="false">lbds-blueprint-adverteren</guid>
 		<description></description>
-		<content:encoded><![CDATA[<p>Ben je benieuwd naar de mogelijkheden om te adverteren op deze site? Neem contact op via het formulier met een korte toelichting op je merk en doelgroep.</p>
-<p>[contact-form-7 title="Contact"]</p>]]></content:encoded>
+		<content:encoded><![CDATA[<p>Ben je benieuwd naar de mogelijkheden om te adverteren op deze site? Neem contact op via de contactpagina met een korte toelichting op je merk en doelgroep.</p>]]></content:encoded>
 		<excerpt:encoded><![CDATA[]]></excerpt:encoded>
 		<wp:post_id>105</wp:post_id>
 		<wp:post_date>2026-08-20 12:00:00</wp:post_date>

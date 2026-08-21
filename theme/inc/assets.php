@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 }
 
 function lbds_enqueue_assets(): void {
-	$fonts = 'https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Public+Sans:wght@400;500;600;700&display=swap';
+	$fonts = 'https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap';
 	wp_enqueue_style('lbds-fonts', $fonts, array(), null);
 	wp_enqueue_style('lbds-main', LBDS_URI . '/assets/css/main.css', array('lbds-fonts'), LBDS_VERSION);
 	wp_add_inline_style('lbds-main', lbds_brand_css_variables());
