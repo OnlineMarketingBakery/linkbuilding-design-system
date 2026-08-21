@@ -53,7 +53,7 @@ function lbds_current_sort(): string {
 }
 
 /**
- * Apply sort on category + blog listings.
+ * Apply sort on category + blog listings; limit search to posts only.
  *
  * @param WP_Query $query Query.
  */
@@ -61,6 +61,13 @@ function lbds_pre_get_posts(WP_Query $query): void {
 	if (is_admin() || !$query->is_main_query()) {
 		return;
 	}
+
+	// Search should list articles only — never static pages (Home, Privacy, etc.).
+	if ($query->is_search()) {
+		$query->set('post_type', 'post');
+		return;
+	}
+
 	if (!$query->is_category() && !$query->is_home() && !$query->is_tag() && !$query->is_author()) {
 		return;
 	}

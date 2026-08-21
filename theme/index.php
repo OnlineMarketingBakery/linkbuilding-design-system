@@ -8,7 +8,6 @@
 get_header();
 ?>
 <div class="mb-page">
-	<?php get_template_part('template-parts/cat-strip'); ?>
 	<div class="cat-head">
 		<span class="kicker"><?php esc_html_e('Archief', 'lbds'); ?></span>
 		<h1><?php echo esc_html(get_the_title(get_option('page_for_posts')) ?: __('Artikelen', 'lbds')); ?></h1>

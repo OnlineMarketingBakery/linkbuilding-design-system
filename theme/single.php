@@ -37,9 +37,9 @@ get_header();
 				<p class="dek"><?php echo esc_html(get_the_excerpt()); ?></p>
 			<?php endif; ?>
 			<div class="byline">
-				<div class="avatar"><?php echo esc_html(mb_substr(get_the_author(), 0, 1)); ?></div>
+				<div class="avatar"><?php echo esc_html(lbds_author_initial()); ?></div>
 				<div>
-					<div class="byline-name"><?php the_author(); ?></div>
+					<div class="byline-name"><?php echo esc_html(lbds_author_display_name()); ?></div>
 					<div class="byline-meta">
 						<?php echo esc_html(get_the_date()); ?>
 						&middot;
@@ -81,16 +81,14 @@ get_header();
 				</div>
 				<div class="author-card">
 					<div class="byline">
-						<div class="avatar"><?php echo esc_html(mb_substr(get_the_author(), 0, 1)); ?></div>
+						<div class="avatar"><?php echo esc_html(lbds_author_initial()); ?></div>
 						<div>
 							<div class="byline-name">
-								<a href="<?php echo esc_url(get_author_posts_url((int) get_the_author_meta('ID'))); ?>"><?php the_author(); ?></a>
+								<a href="<?php echo esc_url(home_url('/')); ?>"><?php echo esc_html(lbds_author_display_name()); ?></a>
 							</div>
 						</div>
 					</div>
-					<?php if (get_the_author_meta('description')) : ?>
-						<p><?php echo esc_html(get_the_author_meta('description')); ?></p>
-					<?php endif; ?>
+					<p><?php echo esc_html(lbds_site_about()); ?></p>
 				</div>
 			</aside>
 		</div>

@@ -107,4 +107,44 @@
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update, { passive: true });
   }
+  /* Mobile nav toggle (overlay panel) */
+  var header = document.querySelector('.site-header');
+  var toggle = document.querySelector('.nav-toggle');
+  var nav = document.getElementById('lbds-primary-nav');
+  var backdrop = document.querySelector('[data-nav-backdrop]');
+  if (header && toggle && nav) {
+    var setOpen = function (open) {
+      header.classList.toggle('is-nav-open', open);
+      if (chrome) chrome.classList.toggle('is-nav-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      document.body.classList.toggle('lbds-nav-lock', open);
+      if (backdrop) {
+        if (open) backdrop.removeAttribute('hidden');
+        else backdrop.setAttribute('hidden', '');
+      }
+    };
+    toggle.addEventListener('click', function () {
+      setOpen(!header.classList.contains('is-nav-open'));
+    });
+    if (backdrop) {
+      backdrop.addEventListener('click', function () {
+        setOpen(false);
+      });
+    }
+    nav.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        setOpen(false);
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setOpen(false);
+    });
+    window.addEventListener(
+      'resize',
+      function () {
+        if (window.matchMedia('(min-width: 961px)').matches) setOpen(false);
+      },
+      { passive: true }
+    );
+  }
 })();

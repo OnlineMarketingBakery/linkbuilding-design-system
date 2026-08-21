@@ -18,7 +18,7 @@
 		<div class="meta" style="margin-top:6px;">
 			<span><?php echo esc_html((string) lbds_reading_time()); ?> <?php esc_html_e('min', 'lbds'); ?></span>
 			<span class="dot"></span>
-			<span><?php the_author(); ?></span>
+			<span><?php echo esc_html(lbds_author_display_name()); ?></span>
 		</div>
 	</div>
 </a>

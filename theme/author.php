@@ -1,26 +1,23 @@
 <?php
 /**
- * Author — Masterblog AuthorPage.html
+ * Author — shows site as publisher (site name + about).
  *
  * @package LBDS
  */
 
 get_header();
-$author = get_queried_object();
 ?>
 <div class="mb-page">
 	<div class="profile">
-		<div class="avatar-lg"><?php echo esc_html(mb_substr(get_the_author_meta('display_name', $author->ID ?? 0), 0, 1)); ?></div>
+		<div class="avatar-lg"><?php echo esc_html(lbds_author_initial()); ?></div>
 		<div>
-			<span class="kicker"><?php esc_html_e('Auteur', 'lbds'); ?></span>
-			<h1><?php the_author(); ?></h1>
-			<div class="role"><?php echo esc_html(get_the_author_meta('nickname')); ?></div>
-			<?php if (get_the_author_meta('description')) : ?>
-				<p class="bio"><?php echo esc_html(get_the_author_meta('description')); ?></p>
-			<?php endif; ?>
+			<span class="kicker"><?php esc_html_e('Redactie', 'lbds'); ?></span>
+			<h1><?php echo esc_html(lbds_author_display_name()); ?></h1>
+			<div class="role"><?php esc_html_e('Website', 'lbds'); ?></div>
+			<p class="bio"><?php echo esc_html(lbds_site_about()); ?></p>
 			<div class="stat-row">
 				<div class="stat">
-					<b><?php echo esc_html((string) count_user_posts((int) get_the_author_meta('ID'))); ?></b>
+					<b><?php echo esc_html((string) (int) wp_count_posts()->publish); ?></b>
 					<span><?php esc_html_e('Artikelen', 'lbds'); ?></span>
 				</div>
 			</div>
@@ -29,7 +26,7 @@ $author = get_queried_object();
 
 	<section class="section">
 		<div class="section-head">
-			<h2 class="section-title"><?php echo esc_html(sprintf(__('Artikelen van %s', 'lbds'), get_the_author())); ?></h2>
+			<h2 class="section-title"><?php echo esc_html(sprintf(__('Artikelen van %s', 'lbds'), lbds_author_display_name())); ?></h2>
 		</div>
 		<div class="cards-grid reveal">
 			<?php if (have_posts()) : ?>

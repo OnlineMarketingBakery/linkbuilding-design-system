@@ -42,6 +42,61 @@ function lbds_site_name(): void {
 	echo esc_html(get_bloginfo('name'));
 }
 
+/**
+ * Logo wordmark: last word + period in brand color (Masterblog pattern).
+ */
+function lbds_site_logo_text(): void {
+	$name = trim((string) get_bloginfo('name'));
+	if ($name === '') {
+		echo '<span>.</span>';
+		return;
+	}
+	$parts = preg_split('/\s+/u', $name) ?: array();
+	if (count($parts) < 2) {
+		echo '<span>' . esc_html($name) . '.</span>';
+		return;
+	}
+	$last = array_pop($parts);
+	echo esc_html(implode(' ', $parts) . ' ');
+	echo '<span>' . esc_html($last) . '.</span>';
+}
+
+/**
+ * Public byline name — always the site name (never WP "admin").
+ */
+function lbds_author_display_name(): string {
+	$name = trim((string) get_bloginfo('name'));
+	return $name !== '' ? $name : __('Redactie', 'lbds');
+}
+
+/**
+ * First character for avatar initials.
+ */
+function lbds_author_initial(): string {
+	$name = lbds_author_display_name();
+	$ch   = mb_substr($name, 0, 1);
+	return $ch !== '' ? mb_strtoupper($ch) : 'R';
+}
+
+/**
+ * Short about blurb for author card — per-site via brand.json `about`, else tagline, else default.
+ */
+function lbds_site_about(): string {
+	$brand = lbds_get_brand();
+	if (!empty($brand['about']) && is_string($brand['about'])) {
+		return trim($brand['about']);
+	}
+	$tagline = lbds_tagline();
+	if ($tagline !== '') {
+		return $tagline;
+	}
+	return sprintf(
+		/* translators: %s: site name */
+		__('Praktische artikelen en tips van %s — helder, bruikbaar en up-to-date.', 'lbds'),
+		lbds_author_display_name()
+	);
+}
+
 function lbds_tagline(): string {
 	$brand = lbds_get_brand();
 	if ($brand['tagline_override'] !== '') {

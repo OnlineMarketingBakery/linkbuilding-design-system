@@ -28,19 +28,12 @@ $term = get_queried_object();
 
 	<div class="toolbar">
 		<div class="filters">
-			<span class="chip active">
-				<?php
-				$count = ($term instanceof WP_Term) ? (int) $term->count : 0;
-				echo esc_html(sprintf(__('Alles · %d', 'lbds'), $count));
-				?>
-			</span>
+			<a class="chip" href="<?php echo esc_url(get_permalink((int) get_option('page_for_posts')) ?: home_url('/artikelen/')); ?>"><?php esc_html_e('Alles', 'lbds'); ?></a>
 			<?php foreach (lbds_nav_categories() as $c) : ?>
 				<?php
-				if ($term instanceof WP_Term && (int) $c->term_id === (int) $term->term_id) {
-					continue;
-				}
+				$is_active = $term instanceof WP_Term && (int) $c->term_id === (int) $term->term_id;
 				?>
-				<a class="chip" href="<?php echo esc_url(get_term_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
+				<a class="chip<?php echo $is_active ? ' active' : ''; ?>" href="<?php echo esc_url(get_term_link($c)); ?>"><?php echo esc_html($c->name); ?></a>
 			<?php endforeach; ?>
 		</div>
 		<?php lbds_the_sort_select(); ?>

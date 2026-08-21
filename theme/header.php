@@ -1,10 +1,11 @@
 <?php
 /**
- * Header — Masterblog site-header (Home.html).
+ * Header — Masterblog site-header (category-filled nav).
  *
  * @package LBDS
  */
-$brand = lbds_sanitize_brand_hex(lbds_get_brand()['accent']);
+$brand         = lbds_sanitize_brand_hex(lbds_get_brand()['accent']);
+$artikelen_url = get_permalink((int) get_option('page_for_posts')) ?: home_url('/artikelen/');
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -26,7 +27,7 @@ $brand = lbds_sanitize_brand_hex(lbds_get_brand()['accent']);
 			<?php if (has_custom_logo()) : ?>
 				<?php the_custom_logo(); ?>
 			<?php else : ?>
-				<?php lbds_site_name(); ?><span>.</span>
+				<?php lbds_site_logo_text(); ?>
 			<?php endif; ?>
 		</a>
 		<?php
@@ -35,12 +36,14 @@ $brand = lbds_sanitize_brand_hex(lbds_get_brand()['accent']);
 				'theme_location' => 'primary',
 				'container'      => false,
 				'menu_class'     => 'primary-nav',
-				'fallback_cb'    => static function (): void {
-					echo '<ul class="primary-nav">';
-					echo '<li><a href="' . esc_url(get_permalink((int) get_option('page_for_posts')) ?: home_url('/artikelen/')) . '">' . esc_html__('Artikelen', 'lbds') . '</a></li>';
-					echo '<li><a href="' . esc_url(home_url('/artikelen/')) . '">' . esc_html__('Categorieën', 'lbds') . '</a></li>';
-					echo '<li><a href="' . esc_url(home_url('/partners/')) . '">' . esc_html__('Partners', 'lbds') . '</a></li>';
-					echo '<li><a href="' . esc_url(home_url('/contact/')) . '">' . esc_html__('Contact', 'lbds') . '</a></li>';
+				'menu_id'        => 'lbds-primary-nav',
+				'fallback_cb'    => static function () use ($artikelen_url): void {
+					echo '<ul class="primary-nav" id="lbds-primary-nav">';
+					echo '<li><a href="' . esc_url(home_url('/')) . '">' . esc_html__('Home', 'lbds') . '</a></li>';
+					foreach (array_slice(lbds_nav_categories(), 0, 6) as $cat) {
+						echo '<li><a href="' . esc_url(get_term_link($cat)) . '">' . esc_html($cat->name) . '</a></li>';
+					}
+					echo '<li><a href="' . esc_url($artikelen_url) . '">' . esc_html__('Artikelen', 'lbds') . '</a></li>';
 					echo '</ul>';
 				},
 			)
@@ -50,10 +53,14 @@ $brand = lbds_sanitize_brand_hex(lbds_get_brand()['accent']);
 			<a href="<?php echo esc_url(home_url('/?s=')); ?>" aria-label="<?php esc_attr_e('Zoeken', 'lbds'); ?>">
 				<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
 			</a>
-			<a class="btn-cta" href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact', 'lbds'); ?></a>
+			<a class="btn-cta" href="<?php echo esc_url($artikelen_url); ?>"><?php esc_html_e('Alle artikelen', 'lbds'); ?></a>
+			<button type="button" class="nav-toggle" aria-expanded="false" aria-controls="lbds-primary-nav" aria-label="<?php esc_attr_e('Menu', 'lbds'); ?>">
+				<span class="nav-toggle-bars" aria-hidden="true"></span>
+			</button>
 		</div>
 	</div>
 </header>
+<div class="nav-backdrop" data-nav-backdrop hidden></div>
 </div><!-- .site-chrome -->
 
 <main id="content">

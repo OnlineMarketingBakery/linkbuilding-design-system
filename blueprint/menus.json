@@ -1,14 +1,10 @@
 {
   "primary": [
     { "title": "Home", "url": "/", "type": "custom" },
-    { "title": "Artikelen", "url": "/artikelen/", "type": "custom" },
-    { "title": "Contact", "slug": "contact", "type": "page" },
-    { "title": "Adverteren", "slug": "adverteren", "type": "page" }
+    { "title": "Artikelen", "url": "/artikelen/", "type": "custom" }
   ],
   "footer": [
-    { "title": "Contact", "slug": "contact", "type": "page" },
-    { "title": "Partners", "slug": "partners", "type": "page" },
-    { "title": "Privacy", "slug": "privacy", "type": "page" },
-    { "title": "Adverteren", "slug": "adverteren", "type": "page" }
+    { "title": "Artikelen", "url": "/artikelen/", "type": "custom" },
+    { "title": "Privacy", "slug": "privacy", "type": "page" }
   ]
 }
