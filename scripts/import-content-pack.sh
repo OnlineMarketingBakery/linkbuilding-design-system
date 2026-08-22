@@ -86,8 +86,14 @@ if [[ -f "$PACK/media-manifest.json" ]]; then
   "${WP[@]}" eval-file "$REPO_ROOT/scripts/sideload-media-wp.php" || true
 fi
 
-echo "==> Rebuild menus (includes Partners in footer)"
+echo "==> Purge dummy / spam posts"
+"${WP[@]}" eval-file "$REPO_ROOT/scripts/purge-junk-posts-wp.php" || true
+
+echo "==> Rebuild menus (Home + top categories + Artikelen)"
 LBDS_REPO="$REPO_ROOT" "${WP[@]}" eval-file "$REPO_ROOT/scripts/build-menus-wp.php" || true
+
+echo "==> Enrich: favicon, categories, featured images"
+bash "$REPO_ROOT/scripts/enrich-site.sh" "$WP_PATH" "${OLD_DOMAIN:-}"
 
 "${WP[@]}" rewrite flush --hard
 "${WP[@]}" cache flush 2>/dev/null || true

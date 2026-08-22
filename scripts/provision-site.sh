@@ -138,6 +138,9 @@ fi
 echo "==> Menus"
 LBDS_REPO="$REPO_ROOT" "${WP[@]}" eval-file "$REPO_ROOT/scripts/build-menus-wp.php"
 
+echo "==> Purge dummy posts (fresh installs)"
+"${WP[@]}" eval-file "$REPO_ROOT/scripts/purge-junk-posts-wp.php" || true
+
 # Flush
 "${WP[@]}" rewrite structure '/%postname%/' --hard
 "${WP[@]}" rewrite flush --hard
